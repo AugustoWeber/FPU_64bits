@@ -1,3 +1,5 @@
+# FPU 64 bits
+
 Augusto G Weber added 21/10/2025
 
 Modificou para ter entrada e saída em 4 estágios de 16 bits por vez. 
@@ -10,6 +12,8 @@ Invocar simulações:
  - Simulação 16bits + UPF: xrun -f xargs2upf
 
 ----------------------------------------------------------------------------------------------------------------------
+
+## Original
 
 The following describes the IEEE-Standard-754 compliant, double-precision floating point unit, 
 written in VHDL.  The module consists of the following files:
@@ -100,75 +104,4 @@ If you have any questions, please email me at: davidklun@gmail.com
 
 Thanks,
 David Lundgren
-
------
-
-Synthesis Results:
-
-
-
-
-Performance Summary 
-*******************
-
-
-Worst slack in design: -2.049
-
-
-                   Requested     Estimated     Requested     Estimated                Clock        Clock              
-Starting Clock     Frequency     Frequency     Period        Period        Slack      Type         Group              
-----------------------------------------------------------------------------------------------------------------------
-fpu_double|clk     300.0 MHz     185.8 MHz     3.333         5.382         -2.049     inferred     Inferred_clkgroup_0
-======================================================================================================================
-
-
----------------------------------------
-Resource Usage Report for fpu_double 
-
-Mapping to part: xc5vsx95tff1136-2
-Cell usage:
-DSP48E          9 uses
-FD              3 uses
-FDE             21 uses
-FDR             587 uses
-FDRE            3767 uses
-FDRS            8 uses
-FDRSE           51 uses
-GND             6 uses
-MUXCY           20 uses
-MUXCY_L         598 uses
-MUXF7           2 uses
-VCC             6 uses
-XORCY           497 uses
-XORCY_L         5 uses
-LUT1            187 uses
-LUT2            742 uses
-LUT3            1591 uses
-LUT4            847 uses
-LUT5            589 uses
-LUT6            2613 uses
-
-I/O ports: 206
-I/O primitives: 205
-IBUF           135 uses
-OBUF           70 uses
-
-BUFGP          1 use
-
-I/O Register bits:                  0
-Register bits not including I/Os:   4437 (7%)
-
-Global Clock Buffers: 1 of 32 (3%)
-
-Total load per clock:
-   fpu_double|clk: 4446
-
-Mapping Summary:
-Total  LUTs: 6569 (11%)
-
-Mapper successful!
-
-
-
-
 

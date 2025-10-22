@@ -1,0 +1,16 @@
+-gui 
+-64bit 
+-access +rw 
+-v200x 
+-top fpu_double_tb
+fpupack.vhd 
+comppack.vhd 
+fpu_round.vhd 
+fpu_div.vhd 
+fpu_mul.vhd 
+fpu_sub.vhd 
+fpu_exceptions.vhd 
+fpu_add.vhd 
+my_fpu_double.vhd 
+my_fpu_double_TB.sv 
+-input desabilita_asserts.tcl

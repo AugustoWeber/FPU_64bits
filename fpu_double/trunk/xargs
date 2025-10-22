@@ -1,0 +1,15 @@
+-gui 
+-64bit 
+-access +rw 
+-v2019
+-top fpu_double_TB
+fpupack.vhd 
+comppack.vhd 
+fpu_round.vhd 
+fpu_div.vhd 
+fpu_mul.vhd 
+fpu_sub.vhd 
+fpu_exceptions.vhd 
+fpu_add.vhd 
+fpu_double.vhd 
+fpu_double_TB.vhd 

@@ -1,0 +1,14 @@
+.simvision/*
+waves.shm/*
+xcelium.*/*
+*.svwf
+*.diag
+*.err
+*.log
+*.key
+*.history
+
+sim_64/*
+!sim_64/xargs
+sim_16/*
+!sim_16/xargs2

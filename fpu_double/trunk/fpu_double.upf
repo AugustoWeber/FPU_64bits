@@ -1,0 +1,138 @@
+#--------------------------------------------------------------------------------------------------
+# This code is generated to use in conjunct with my_fpu_double.vhd. 
+# It may be compatible with the original fpu_double.vhd.
+#
+# Author: Augusto G. Weber
+# File: fpu_double.upf
+# Date: 15/10/2025
+# Description: 
+#     Arquivo de UPF para criar Power domains na FPU. 
+#     Utiliza o sinal fpu_op_reg para definir os Power Gates.
+#     Não utiliza FF de retenção.
+#--------------------------------------------------------------------------------------------------
+
+upf_version 3.1
+
+set_design_top fpu_double_tb -testbench
+set_scope fpu_double_tb.fpu_i
+
+create_supply_net VDD
+create_supply_port VDD
+connect_supply_net VDD -ports VDD
+
+create_supply_net VSS
+create_supply_port VSS
+connect_supply_net VSS -ports VSS
+
+create_supply_set SS_Aon -function {power VDD} -function {ground VSS}
+create_power_domain PD_TOP -supply {primary SS_Aon} -include_scope
+
+# create_power_domain PD_ADD -supply {primary SS_Aon} -include_scope
+# create_power_domain PD_SUB -supply {primary SS_Aon} -include_scope
+# create_power_domain PD_MUL -supply {primary SS_Aon} -include_scope
+# create_power_domain PD_DIV -supply {primary SS_Aon} -include_scope
+
+#####################
+#  FPU_ADD          #
+#####################
+
+create_supply_net VDD_ADD
+create_supply_set SS_ADD -function {power VDD_ADD} -function {ground VSS}
+create_power_domain PD_ADD -supply {primary SS_ADD} -elements i_fpu_add
+
+# Switch
+create_power_switch PS_ADD \
+  -domain PD_ADD \
+  -input_supply_port { TVDD VDD } \
+  -output_supply_port { VDD VDD_ADD } \
+  -control_port { NSEELPIN SW_ADD} \
+  -on_state { ADD_ON TVDD !NSEELPIN }
+  # -ack_port {NSLEEPOUT sleep_ack[0]} \
+
+# Retention
+# set_retention RETAIN_ADD -domain PD_ADD \
+#   -retention_supply_set SS_Aon \                  
+#   -save_signal    { save[0] posedge } \
+#   -restore_signal { rest[0] negedge } \
+
+# Isolation
+set_isolation ISO_ADD_LOW \
+  -domain PD_ADD \
+  -location parent \
+  -applies_to outputs \
+  -isolation_supply_set SS_Aon \
+  -isolation_signal {SW_ADD} \
+  -clamp_value latch
+
+#####################
+#  FPU_SUB          #
+#####################
+
+create_supply_net VDD_SUB
+create_supply_set SS_SUB -function {power VDD_SUB} -function {ground VSS}
+create_power_domain PD_SUB -supply {primary SS_SUB} -elements i_fpu_sub
+
+# Switch
+create_power_switch PS_SUB \
+  -domain PD_SUB \
+  -input_supply_port { TVDD VDD } \
+  -output_supply_port { VDD VDD_SUB } \
+  -control_port { NSEELPIN SW_SUB} \
+  -on_state { SUB_ON TVDD !NSEELPIN }
+
+set_isolation ISO_SUB_LOW \
+  -domain PD_SUB \
+  -applies_to outputs \
+  -isolation_supply_set SS_Aon \
+  -isolation_signal {SW_SUB} \
+  -clamp_value latch
+
+#####################
+#  FPU_MUL          #
+#####################
+
+create_supply_net VDD_MUL
+create_supply_set SS_MUL -function {power VDD_MUL} -function {ground VSS}
+create_power_domain PD_MUL -supply {primary SS_MUL} -elements i_fpu_mul
+
+# Switch
+create_power_switch PS_MUL \
+  -domain PD_MUL \
+  -input_supply_port { TVDD VDD } \
+  -output_supply_port { VDD VDD_MUL } \
+  -control_port { NSEELPIN SW_MUL} \
+  -on_state { MUL_ON TVDD !NSEELPIN }
+
+set_isolation ISO_MUL_LOW \
+  -domain PD_MUL \
+  -applies_to outputs \
+  -isolation_supply_set SS_Aon \
+  -isolation_signal {SW_MUL} \
+  -clamp_value latch
+
+#####################
+#  FPU_DIV          #
+#####################
+
+create_supply_net VDD_DIV
+create_supply_set SS_DIV -function {power VDD_DIV} -function {ground VSS}
+create_power_domain PD_DIV -supply {primary SS_DIV} -elements i_fpu_div
+
+# Switch
+create_power_switch PS_DIV \
+  -domain PD_DIV \
+  -input_supply_port { TVDD VDD } \
+  -output_supply_port { VDD VDD_DIV } \
+  -control_port { NSEELPIN SW_DIV} \
+  -on_state { DIV_ON TVDD !NSEELPIN }
+
+set_isolation ISO_DIV_LOW \
+  -domain PD_DIV \
+  -applies_to outputs \
+  -isolation_supply_set SS_Aon \
+  -isolation_signal {SW_DIV} \
+  -clamp_value latch
+
+
+
+
